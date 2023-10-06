@@ -12,20 +12,28 @@ char *replace(const char *input_str) {
   for (size_t i = 0; i < input_length && input_str[i] != '\0'; ++i) {
     switch (input_str[i]) {
     case '&':
-      strcat(out, "&amp;");
-      out_index += 5;
+      if (out_index + 5 <= input_length * 5) {
+        strncpy(out + out_index, "&amp;", 5);
+        out_index += 5;
+      }
       break;
     case '<':
-      strcat(out, "&lt;");
-      out_index += 4;
+      if (out_index + 4 <= input_length * 5) {
+        strncpy(out + out_index, "&lt;", 4);
+        out_index += 4;
+      }
       break;
     case '>':
-      strcat(out, "&gt;");
-      out_index += 4;
+      if (out_index + 4 <= input_length * 5) {
+        strncpy(out + out_index, "&gt;", 4);
+        out_index += 4;
+      }
       break;
     default:
-      out[out_index] = input_str[i];
-      ++out_index;
+      if (out_index < input_length * 5) {
+        out[out_index] = input_str[i];
+        ++out_index;
+      }
       break;
     }
   }
