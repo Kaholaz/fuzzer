@@ -6,7 +6,7 @@ char *replace(const char *input_str) {
     return NULL;
 
   size_t input_length = strlen(input_str);
-  char *out = (char *)calloc(input_length * 5 + 1, 1); // Worst case malloc
+  char *out = (char *)calloc(input_length * 5, 1); // Worst case malloc
 
   size_t out_index = 0;
   for (size_t i = 0; i < input_length && input_str[i] != '\0'; ++i) {
