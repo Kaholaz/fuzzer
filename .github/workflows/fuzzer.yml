@@ -1,0 +1,32 @@
+name: Run fuzzer
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Requirements
+        run: |
+          sudo apt-get update
+          sudo apt-get install clang -y
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+        env:
+          CC: clang
+          CXX: clang++
+      - name: Run fuzzer
+        run: |
+          cd build
+          ./replace_fuzzer_test -max_total_time=10
+
